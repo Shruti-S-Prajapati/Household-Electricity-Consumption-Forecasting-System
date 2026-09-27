@@ -4,19 +4,22 @@ from pydantic import BaseModel, Field
 import pandas as pd
 import joblib
 
+import database
+
 
 # -------------------------------------------------
 # Create FastAPI application
 # -------------------------------------------------
 
 app = FastAPI(
-    title="Context-Aware Household Electricity Prediction API",
+    title="Household Electricity Consumption Forecasting API",
     description=(
         "Predicts household electricity consumption "
         "using environmental conditions, occupancy "
-        "and appliance usage."
+        "and appliance usage. Also stores every prediction "
+        "in a database for history and stats."
     ),
-    version="1.0.0"
+    version="1.1.0"
 )
 
 
@@ -40,6 +43,14 @@ app.add_middleware(
 model = joblib.load(
     "models/electricity_model.pkl"
 )
+
+
+# -------------------------------------------------
+# Initialize database (creates predictions.db + table
+# on first run if they don't already exist)
+# -------------------------------------------------
+
+database.init_db()
 
 
 # -------------------------------------------------
@@ -148,6 +159,14 @@ def predict(data: PredictionInput):
     # ---------------------------------------------
 
     prediction = model.predict(input_data)[0]
+    predicted_kwh = round(float(prediction), 3)
+
+
+    # ---------------------------------------------
+    # Save this prediction to the database
+    # ---------------------------------------------
+
+    database.save_prediction(data.dict(), predicted_kwh)
 
 
     # ---------------------------------------------
@@ -156,5 +175,39 @@ def predict(data: PredictionInput):
 
     return {
         "predicted_electricity_consumption_kwh":
-            round(float(prediction), 3)
+            predicted_kwh
+    }
+
+
+# -------------------------------------------------
+# History endpoint — view past predictions
+# -------------------------------------------------
+
+@app.get("/history")
+def history(limit: int = 50):
+
+    return database.get_history(limit)
+
+
+# -------------------------------------------------
+# Stats endpoint — summary across all predictions
+# -------------------------------------------------
+
+@app.get("/stats")
+def stats():
+
+    return database.get_stats()
+
+
+# -------------------------------------------------
+# Clear history endpoint — wipe stored predictions
+# -------------------------------------------------
+
+@app.delete("/history")
+def delete_history():
+
+    database.clear_history()
+
+    return {
+        "message": "All prediction history cleared"
     }
