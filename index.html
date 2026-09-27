@@ -12,109 +12,7 @@
         Household Electricity Consumption Forecasting System
     </title>
 
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #222;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 25px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-
-        button {
-            width: 100%;
-            margin-top: 20px;
-            padding: 13px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            opacity: 0.85;
-        }
-
-        .result {
-            text-align: center;
-            font-size: 30px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        .unit {
-            text-align: center;
-            color: #666;
-        }
-
-        @media (max-width: 600px) {
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                margin: 15px auto;
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -123,61 +21,45 @@
 
 <div class="container">
 
-    <h1>
-        ⚡ Household Electricity Consumption Forecasting System
-    </h1>
+    <header>
 
-    <p class="subtitle">
-        Context-aware electricity consumption prediction
-    </p>
+        <svg class="bolt-icon" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2 L4 14 H11 L10 22 L20 9 H13 L13 2 Z"
+                  stroke="currentColor" stroke-width="1.6"
+                  stroke-linejoin="round" fill="none" />
+        </svg>
+
+        <div>
+            <h1>Household Electricity Consumption Forecasting</h1>
+            <p class="subtitle">
+                Predicts hourly consumption from weather, occupancy
+                and appliance usage.
+            </p>
+        </div>
+
+    </header>
 
 
-    <div class="card">
+    <div class="panel">
 
         <h2>Environment</h2>
 
         <div class="grid">
 
-            <div>
-
-                <label>
-                    Temperature (°C)
-                </label>
-
-                <input
-                    id="temperature"
-                    type="number"
-                    value="30"
-                    step="0.1"
-                >
-
+            <div class="field">
+                <label for="temperature">Temperature (°C)</label>
+                <input id="temperature" type="number" value="30" step="0.1">
             </div>
 
-
-            <div>
-
-                <label>
-                    Humidity (%)
-                </label>
-
-                <input
-                    id="humidity"
-                    type="number"
-                    value="65"
-                    step="0.1"
-                >
-
+            <div class="field">
+                <label for="humidity">Humidity (%)</label>
+                <input id="humidity" type="number" value="65" step="0.1">
             </div>
 
-
-            <div>
-
-                <label>
-                    Day
-                </label>
-
+            <div class="field">
+                <label for="day">Day</label>
                 <select id="day">
-
                     <option>Monday</option>
                     <option>Tuesday</option>
                     <option>Wednesday</option>
@@ -185,51 +67,23 @@
                     <option>Friday</option>
                     <option>Saturday</option>
                     <option>Sunday</option>
-
                 </select>
-
             </div>
 
-
-            <div>
-
-                <label>
-                    Weekend?
-                </label>
-
+            <div class="field">
+                <label for="weekend">Weekend?</label>
                 <select id="weekend">
-
-                    <option value="0">
-                        No
-                    </option>
-
-                    <option value="1">
-                        Yes
-                    </option>
-
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
                 </select>
-
             </div>
 
-
-            <div>
-
-                <label>
-                    Holiday?
-                </label>
-
+            <div class="field">
+                <label for="holiday">Holiday?</label>
                 <select id="holiday">
-
-                    <option value="0">
-                        No
-                    </option>
-
-                    <option value="1">
-                        Yes
-                    </option>
-
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
                 </select>
-
             </div>
 
         </div>
@@ -237,44 +91,20 @@
     </div>
 
 
-    <div class="card">
+    <div class="panel">
 
-        <h2>Household Situation</h2>
+        <h2>Household situation</h2>
 
         <div class="grid">
 
-            <div>
-
-                <label>
-                    People at Home
-                </label>
-
-                <input
-                    id="people"
-                    type="number"
-                    value="2"
-                    min="0"
-                    max="10"
-                >
-
+            <div class="field">
+                <label for="people">People at home</label>
+                <input id="people" type="number" value="2" min="0" max="10">
             </div>
 
-
-            <div>
-
-                <label>
-                    Hours at Home
-                </label>
-
-                <input
-                    id="homeHours"
-                    type="number"
-                    value="8"
-                    min="0"
-                    max="24"
-                    step="0.5"
-                >
-
+            <div class="field">
+                <label for="homeHours">Hours at home</label>
+                <input id="homeHours" type="number" value="8" min="0" max="24" step="0.5">
             </div>
 
         </div>
@@ -282,229 +112,58 @@
     </div>
 
 
-    <div class="card">
+    <div class="panel">
 
-        <h2>Appliance Usage</h2>
+        <h2>Appliance usage</h2>
 
         <div class="grid">
 
-            <div>
-
-                <label>
-                    AC Hours
-                </label>
-
-                <input
-                    id="ac"
-                    type="number"
-                    value="2"
-                    min="0"
-                    max="24"
-                    step="0.5"
-                >
-
+            <div class="field">
+                <label for="ac">AC hours</label>
+                <input id="ac" type="number" value="2" min="0" max="24" step="0.5">
             </div>
 
-
-            <div>
-
-                <label>
-                    Fan Hours
-                </label>
-
-                <input
-                    id="fan"
-                    type="number"
-                    value="5"
-                    min="0"
-                    max="24"
-                    step="0.5"
-                >
-
+            <div class="field">
+                <label for="fan">Fan hours</label>
+                <input id="fan" type="number" value="5" min="0" max="24" step="0.5">
             </div>
 
-
-            <div>
-
-                <label>
-                    TV Hours
-                </label>
-
-                <input
-                    id="tv"
-                    type="number"
-                    value="2"
-                    min="0"
-                    max="24"
-                    step="0.5"
-                >
-
+            <div class="field">
+                <label for="tv">TV hours</label>
+                <input id="tv" type="number" value="2" min="0" max="24" step="0.5">
             </div>
 
-
-            <div>
-
-                <label>
-                    Washing Machine Used?
-                </label>
-
+            <div class="field">
+                <label for="washing">Washing machine used?</label>
                 <select id="washing">
-
-                    <option value="0">
-                        No
-                    </option>
-
-                    <option value="1">
-                        Yes
-                    </option>
-
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
                 </select>
-
             </div>
 
         </div>
-
 
         <button onclick="predictConsumption()">
-
-            Predict Electricity Consumption
-
+            Predict consumption
         </button>
 
     </div>
 
 
-    <div class="card">
+    <div class="readout-panel">
 
-        <h2>Predicted Consumption</h2>
+        <span class="readout-label">Predicted consumption</span>
 
-        <div
-            class="result"
-            id="result"
-        >
-            --
-        </div>
-
-        <div class="unit">
-            kWh
+        <div class="readout-screen">
+            <div class="result" id="result">0.000</div>
+            <div class="unit">kWh</div>
         </div>
 
     </div>
 
 </div>
 
-
-<script>
-
-async function predictConsumption() {
-
-    const data = {
-
-        temperature_c:
-            parseFloat(
-                document.getElementById("temperature").value
-            ),
-
-        humidity_pct:
-            parseFloat(
-                document.getElementById("humidity").value
-            ),
-
-        day_of_week:
-            document.getElementById("day").value,
-
-        is_weekend:
-            parseInt(
-                document.getElementById("weekend").value
-            ),
-
-        is_holiday:
-            parseInt(
-                document.getElementById("holiday").value
-            ),
-
-        people_at_home:
-            parseInt(
-                document.getElementById("people").value
-            ),
-
-        hours_at_home:
-            parseFloat(
-                document.getElementById("homeHours").value
-            ),
-
-        ac_hours:
-            parseFloat(
-                document.getElementById("ac").value
-            ),
-
-        fan_hours:
-            parseFloat(
-                document.getElementById("fan").value
-            ),
-
-        tv_hours:
-            parseFloat(
-                document.getElementById("tv").value
-            ),
-
-        washing_machine_used:
-            parseInt(
-                document.getElementById("washing").value
-            )
-
-    };
-
-
-    try {
-
-        const response = await fetch(
-            "http://127.0.0.1:8000/predict",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(data)
-            }
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Prediction request failed"
-            );
-
-        }
-
-
-        const result =
-            await response.json();
-
-
-        document.getElementById("result")
-            .innerText =
-            result.predicted_electricity_consumption_kwh;
-
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        document.getElementById("result")
-            .innerText =
-            "Error connecting to API";
-
-    }
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 
