@@ -1,11 +1,3 @@
-"""
-Data Preprocessing & Exploratory Data Analysis
-Household Electricity Consumption Forecasting System
-
-Run this BEFORE train_model.py. It doesn't change the CSV — it documents
-and visualizes the checks that should happen before training a model,
-so there's a clear record of preprocessing/EDA decisions for the report/viva.
-"""
 
 import pandas as pd
 import numpy as np

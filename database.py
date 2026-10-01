@@ -1,11 +1,3 @@
-"""
-Database layer for the Household Electricity Consumption Forecasting API.
-
-Uses SQLite (built into Python — no separate database server needed).
-Every prediction made through /predict gets logged here, so past
-predictions can be listed or analyzed via /history and /stats.
-"""
-
 import sqlite3
 from datetime import datetime
 
